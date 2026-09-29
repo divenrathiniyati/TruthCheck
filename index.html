@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="TruthCheck helps you examine claims using published fact-check evidence and source context."
+    >
+
+    <title>TruthCheck — Verify What You See</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+    <div class="grid-overlay"></div>
+
+    <header class="navbar">
+        <div class="nav-inner">
+
+            <a href="#" class="brand">
+                <span class="brand-shield">◇</span>
+
+                <span class="brand-text">
+                    Truth<span>Check</span>
+                </span>
+            </a>
+
+            <div class="nav-status">
+                <span class="live-dot"></span>
+                Verification Engine
+            </div>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    <span>✦</span>
+                    Evidence-based claim verification
+                </div>
+
+                <h1>
+                    Don't just believe it.
+                    <span>Check it.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Submit a claim or paste a webpage link. TruthCheck will look for
+                    published fact-check evidence, compare relevance,
+                    and show you where the information comes from.
+                </p>
+
+
+                <!-- SEARCH -->
+
+                <form
+                    id="claimForm"
+                    class="search-wrapper"
+                >
+
+                    <div class="search-box">
+
+                        <textarea
+                            id="claimInput"
+                            rows="3"
+                            placeholder="Enter a claim or paste a webpage link..."
+                            aria-label="Claim to check"
+                        ></textarea>
+
+                        <button
+                            id="checkButton"
+                            class="check-button"
+                            type="submit"
+                        >
+                            Check Claim
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                    <div class="search-hint">
+                        Press <kbd>Enter</kbd> to check • Claims and links supported
+                    </div>
+
+                </form>
+
+
+                <!-- EXAMPLES -->
+
+                <div class="examples">
+
+                    <span>Try:</span>
+
+                    <button
+                        type="button"
+                        class="example-button"
+                        data-claim="The Earth is round."
+                    >
+                        “The Earth is round.”
+                    </button>
+
+                    <button
+                        type="button"
+                        class="example-button"
+                        data-claim="Climate change is real."
+                    >
+                        “Climate change is real.”
+                    </button>
+
+                    <button
+                        type="button"
+                        class="example-button"
+                        data-claim="Vaccines are effective."
+                    >
+                        “Vaccines are effective.”
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO VISUAL -->
+
+            <div class="hero-visual">
+
+                <div class="shield-orbit orbit-one"></div>
+                <div class="shield-orbit orbit-two"></div>
+
+                <div class="shield-container">
+
+                    <div class="shield">
+                        <div class="shield-inner">
+                            ✓
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="floating-card card-top">
+                    <span>◉</span>
+                    Published Evidence
+                </div>
+
+                <div class="floating-card card-bottom">
+                    <span>⌁</span>
+                    Source Context
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESULT SECTION -->
+
+        <section
+            id="resultSection"
+            class="result-section"
+        >
+
+            <div class="result-container">
+
+
+                <!-- RESULT HEADER -->
+
+                <div class="result-header">
+
+                    <div>
+
+                        <div class="result-label">
+                            VERIFICATION REPORT
+                        </div>
+
+                        <h2 id="resultClaim">
+                            Claim
+                        </h2>
+
+                    </div>
+
+                    <button
+                        id="newCheckButtonTop"
+                        class="new-check-button"
+                        type="button"
+                    >
+                        ← New Check
+                    </button>
+
+                </div>
+
+
+                <!-- CLAIM ANALYSIS -->
+
+                <section class="analysis-panel">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                STEP 01
+                            </span>
+
+                            <h3>
+                                Claim Analysis
+                            </h3>
+
+                        </div>
+
+                        <span
+                            id="claimTypeBadge"
+                            class="claim-type-badge"
+                        >
+                            Claim
+                        </span>
+
+                    </div>
+
+
+                    <div class="analysis-grid">
+
+                        <div class="analysis-item">
+                            <span>Input Type</span>
+
+                            <strong id="analysisClaimType">
+                                —
+                            </strong>
+                        </div>
+
+
+                        <div class="analysis-item">
+                            <span>Question Detected</span>
+
+                            <strong id="analysisQuestion">
+                                —
+                            </strong>
+                        </div>
+
+
+                        <div class="analysis-item">
+                            <span>Years Detected</span>
+
+                            <strong id="analysisYears">
+                                —
+                            </strong>
+                        </div>
+
+
+                        <div class="analysis-item">
+                            <span>Numbers Detected</span>
+
+                            <strong id="analysisNumbers">
+                                —
+                            </strong>
+                        </div>
+
+
+                        <div class="analysis-item">
+                            <span>URL Detected</span>
+
+                            <strong id="analysisUrl">
+                                —
+                            </strong>
+                        </div>
+
+
+                        <div class="analysis-item">
+                            <span>Context Needed</span>
+
+                            <strong id="analysisContext">
+                                —
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="normalized-box">
+
+                        <span>
+                            Normalized Claim
+                        </span>
+
+                        <p id="normalizedClaim">
+                            —
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- STATUS -->
+
+                <section class="status-card">
+
+                    <div
+                        id="statusIcon"
+                        class="status-icon"
+                    >
+                        ?
+                    </div>
+
+                    <div class="status-content">
+
+                        <span class="status-label">
+                            CHECK STATUS
+                        </span>
+
+                        <h3 id="statusTitle">
+                            Checking...
+                        </h3>
+
+                        <p id="statusMessage">
+                            Looking for published evidence.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- SUMMARY -->
+
+                <section class="summary-section">
+
+                    <div class="summary-card">
+
+                        <span class="summary-icon">
+                            ◈
+                        </span>
+
+                        <div>
+                            <span>Published Sources</span>
+
+                            <strong id="sourceCount">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-icon">
+                            ◎
+                        </span>
+
+                        <div>
+                            <span>Evidence Assessments</span>
+
+                            <strong id="evidenceCount">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-icon">
+                            ✓
+                        </span>
+
+                        <div>
+                            <span>Relevant</span>
+
+                            <strong id="relevantCount">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-icon">
+                            ◐
+                        </span>
+
+                        <div>
+                            <span>Related</span>
+
+                            <strong id="relatedCount">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-icon">
+                            !
+                        </span>
+
+                        <div>
+                            <span>Contradictory</span>
+
+                            <strong id="contradictoryCount">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span class="summary-icon">
+                            !
+                        </span>
+
+                        <div>
+                            <span>Weakly Related</span>
+
+                            <strong id="weakCount">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- SOURCES -->
+
+                <section class="results-block">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                STEP 02
+                            </span>
+
+                            <h3>
+                                Published Sources
+                            </h3>
+
+                        </div>
+
+                        <span class="section-note">
+                            Where the evidence comes from
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="sourcesList"
+                        class="sources-list"
+                    ></div>
+
+                </section>
+
+
+                <!-- EVIDENCE -->
+
+                <section class="results-block">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                STEP 03
+                            </span>
+
+                            <h3>
+                                Evidence Analysis
+                            </h3>
+
+                        </div>
+
+                        <span class="section-note">
+                            Relevance ≠ truth
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="evidenceList"
+                        class="evidence-list"
+                    ></div>
+
+                </section>
+
+
+                <!-- NOTICE -->
+
+                <div
+                    id="notice"
+                    class="notice"
+                >
+                    <strong>Important:</strong>
+                    Relevance shows how closely a published
+                    fact-check matches the submitted claim.
+                    It does not independently prove whether
+                    the claim is true or false.
+                </div>
+
+
+                <!-- NEW CHECK -->
+
+                <div class="bottom-action">
+
+                    <button
+                        id="newCheckButtonBottom"
+                        class="new-check-button large"
+                        type="button"
+                    >
+                        Check Another Claim
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+
+                <span class="brand-shield">
+                    ◇
+                </span>
+
+                <strong>
+                    TruthCheck
+                </strong>
+
+            </div>
+
+            <p>
+                Evidence helps. Context matters.
+            </p>
+
+            <span class="footer-version">
+                MVP • Local Development
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
